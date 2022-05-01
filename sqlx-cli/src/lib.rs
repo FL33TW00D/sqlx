@@ -8,6 +8,7 @@ mod database;
 mod migrate;
 mod opt;
 mod prepare;
+mod print_schema;
 
 pub use crate::opt::Opt;
 
@@ -86,6 +87,14 @@ pub async fn run(opt: Opt) -> Result<()> {
             args,
             database_url,
         } => prepare::check(&database_url, merged, args)?,
+
+        Command::PrintSchema { schema } => {
+            print_schema::run(
+                "postgres://christopher.fleetwood@localhost/diesel_lab",
+                &schema,
+            )
+            .await?
+        }
     };
 
     Ok(())

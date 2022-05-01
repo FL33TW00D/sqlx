@@ -20,6 +20,7 @@ pub use sqlx_core::database::{self, Database};
 pub use sqlx_core::describe::Describe;
 pub use sqlx_core::executor::{Execute, Executor};
 pub use sqlx_core::from_row::FromRow;
+pub use sqlx_core::inspect;
 pub use sqlx_core::pool::{self, Pool};
 pub use sqlx_core::query::{query, query_with};
 pub use sqlx_core::query_as::{query_as, query_as_with};

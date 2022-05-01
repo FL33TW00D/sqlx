@@ -29,8 +29,9 @@ dotenv = "0.15.0"
 tokio = { version = "1.15.0", features = ["macros", "rt", "rt-multi-thread"] }
 sqlx = { version = "0.5.12", path = "..", default-features = false, features = [
     "migrate",
-    "any",
     "offline",
+    "any",
+    "postgres"
 ] }
 futures = "0.3.19"
 clap = { version = "3.1.0", features = ["derive", "env"] }

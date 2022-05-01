@@ -63,6 +63,7 @@ pub mod database;
 pub mod describe;
 pub mod executor;
 pub mod from_row;
+pub mod inspect;
 mod io;
 mod logger;
 mod net;

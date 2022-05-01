@@ -43,6 +43,9 @@ pub enum Command {
 
     #[clap(alias = "mig")]
     Migrate(MigrateOpt),
+
+    #[clap(alias = "ps")]
+    PrintSchema { schema: String },
 }
 
 /// Group of commands for creating and dropping your database.
@@ -207,6 +210,21 @@ impl SourceOverride {
             Some(ref source) => source,
             None => source,
         }
+    }
+}
+
+/// Argument for the schema name.
+#[derive(Args, Debug)]
+pub struct Schema {
+    #[clap(long, short = 's', env)]
+    schema: String,
+}
+
+impl Deref for Schema {
+    type Target = String;
+
+    fn deref(&self) -> &Self::Target {
+        &self.schema
     }
 }
 

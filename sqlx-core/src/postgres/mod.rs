@@ -9,6 +9,7 @@ mod connection;
 mod copy;
 mod database;
 mod error;
+mod inspect;
 mod io;
 mod listener;
 mod message;

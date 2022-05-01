@@ -13,7 +13,7 @@ use std::str::FromStr;
 use std::time::Duration;
 use std::time::Instant;
 
-fn parse_for_maintenance(uri: &str) -> Result<(PgConnectOptions, String), Error> {
+pub fn parse_for_maintenance(uri: &str) -> Result<(PgConnectOptions, String), Error> {
     let mut options = PgConnectOptions::from_str(uri)?;
 
     // pull out the name of the database to create
