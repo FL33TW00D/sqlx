@@ -13,12 +13,12 @@ impl InspectDatabase for Postgres {
     fn output_schema(uri: &str) -> BoxFuture<'_, Result<(), Error>> {
         Box::pin(async move {
             let mut options = PgConnectOptions::from_str(uri)?;
-            options.database = Some("diesel_lab".into());
             let mut conn: PgConnection = options.connect().await?;
 
             let table_names = conn.list_table_names().await?;
-            let table_data = conn.load_table_data(table_names[1].clone()).await?;
-            println!("{}", table_data);
+            for tn in table_names {
+                println!("{}", conn.load_table_data(tn.clone()).await?);
+            }
             Ok(())
         })
     }

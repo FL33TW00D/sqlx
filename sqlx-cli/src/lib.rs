@@ -90,7 +90,8 @@ pub async fn run(opt: Opt) -> Result<()> {
 
         Command::PrintSchema { schema } => {
             print_schema::run(
-                "postgres://christopher.fleetwood@localhost/diesel_lab",
+                //"postgres://christopher.fleetwood@localhost/diesel_lab",
+                "postgresql://postgres:password@localhost:5432/2360ca9b-e5eb-46a9-b54a-493534c7ade8",
                 &schema,
             )
             .await?
