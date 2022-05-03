@@ -1,7 +1,6 @@
 use crate::connection::ConnectOptions;
 use crate::error::Error;
-use crate::executor::Execute;
-use crate::inspect::{Inspect, InspectDatabase};
+use crate::inspect::{ColumnData, Inspect, InspectDatabase, TableData};
 use crate::postgres::{PgConnectOptions, Postgres};
 use crate::query::query;
 use crate::query_as::query_as;
@@ -18,7 +17,8 @@ impl InspectDatabase for Postgres {
             let mut conn: PgConnection = options.connect().await?;
 
             let table_names = conn.list_table_names().await?;
-            conn.load_table_data(table_names).await?;
+            let table_data = conn.load_table_data(table_names[1].clone()).await?;
+            println!("{}", table_data);
             Ok(())
         })
     }
@@ -53,13 +53,23 @@ impl Inspect for PgConnection {
                 WHERE (table_name = $1) AND (table_schema = $2)"#,
             )
             //these binds are bad
-            .bind(table_names[1].clone())
+            .bind(table_name.clone())
             .bind("public")
             .fetch_all(self)
             .await?;
-            let table_data = rows.into_iter().map(|(table_name,)| table_name).collect();
 
-            Ok(())
+            let column_data = rows
+                .into_iter()
+                .map(|c| ColumnData {
+                    name: c.0,
+                    column_type: c.1,
+                })
+                .collect();
+
+            Ok(TableData {
+                name: table_name.clone(),
+                column_data,
+            })
         })
     }
 }
